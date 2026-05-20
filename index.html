@@ -194,9 +194,13 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;
 function joinWaitlist(loc){
   var n=document.getElementById(loc==='hero'?'h-name':'f-name').value;
   var e=document.getElementById(loc==='hero'?'h-email':'f-email').value;
+  var s=document.getElementById(loc==='hero'?'h-size':'f-size').value;
   if(!n||!e){alert('Please fill in your name and email.');return;}
   document.getElementById(loc+'-form').style.display='none';
   document.getElementById(loc+'-ty').style.display='block';
+  var subject=encodeURIComponent('ReportIQ Waitlist: '+n);
+  var body=encodeURIComponent('Name: '+n+'\nEmail: '+e+'\nAgency size: '+s);
+  window.open('mailto:reportiq.waitlist@gmail.com?subject='+subject+'&body='+body);
 }
 function toggleFaq(el){el.parentElement.classList.toggle('open');}
 </script>
