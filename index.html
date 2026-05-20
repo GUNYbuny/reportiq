@@ -89,6 +89,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;
       <input type="text" placeholder="Your name" id="h-name" required/>
       <input type="email" placeholder="Work email" id="h-email" required/>
       <select id="h-size"><option value="" disabled selected>Agency size</option><option>Solo consultant</option><option>2–5 people</option><option>6–20 people</option><option>20+ people</option></select>
+      <input type="text" name="_honey_hero" id="_honey_hero" style="display:none" tabindex="-1" autocomplete="off"/>
       <button class="btn-primary" onclick="joinWaitlist('hero')">Join the Waitlist — Free</button>
     </div>
     <div class="thank-you" id="hero-ty">🎉 You're on the list! We'll be in touch with early access.</div>
@@ -183,6 +184,7 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;
       <input type="text" placeholder="Your name" id="f-name" required/>
       <input type="email" placeholder="Work email" id="f-email" required/>
       <select id="f-size"><option value="" disabled selected>Agency size</option><option>Solo consultant</option><option>2–5 people</option><option>6–20 people</option><option>20+ people</option></select>
+      <input type="text" name="_honey_footer" id="_honey_footer" style="display:none" tabindex="-1" autocomplete="off"/>
       <button class="btn-primary" onclick="joinWaitlist('footer')">Claim Early Access</button>
     </div>
     <div class="thank-you" id="footer-ty">🎉 You're on the list! We'll be in touch with early access.</div>
@@ -192,6 +194,9 @@ footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;
 <footer><p>© 2026 ReportIQ. Made for agencies who bill time, not spend it on reports.</p></footer>
 <script>
 function joinWaitlist(loc){
+  // honeypot check - bots fill this hidden field
+  var honey=document.getElementById('_honey_'+loc);
+  if(honey && honey.value){return;}
   var n=document.getElementById(loc==='hero'?'h-name':'f-name').value;
   var e=document.getElementById(loc==='hero'?'h-email':'f-email').value;
   var s=document.getElementById(loc==='hero'?'h-size':'f-size').value;
@@ -203,7 +208,7 @@ function joinWaitlist(loc){
   fd.append('_subject','ReportIQ Waitlist: '+n);
   fd.append('_captcha','false');
   fd.append('_template','table');
-  fetch('https://formsubmit.co/ajax/gunybuny@gmail.com',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+  fetch('https://formsubmit.co/ajax/'+'gunybuny'+'%40'+'gmail.com',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
     .then(function(){
       document.getElementById(loc+'-form').style.display='none';
       document.getElementById(loc+'-ty').style.display='block';
