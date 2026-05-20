@@ -196,11 +196,22 @@ function joinWaitlist(loc){
   var e=document.getElementById(loc==='hero'?'h-email':'f-email').value;
   var s=document.getElementById(loc==='hero'?'h-size':'f-size').value;
   if(!n||!e){alert('Please fill in your name and email.');return;}
-  document.getElementById(loc+'-form').style.display='none';
-  document.getElementById(loc+'-ty').style.display='block';
-  var subject=encodeURIComponent('ReportIQ Waitlist: '+n);
-  var body=encodeURIComponent('Name: '+n+'\nEmail: '+e+'\nAgency size: '+s);
-  window.open('mailto:reportiq.waitlist@gmail.com?subject='+subject+'&body='+body);
+  var fd=new FormData();
+  fd.append('name',n);
+  fd.append('email',e);
+  fd.append('agency_size',s);
+  fd.append('_subject','ReportIQ Waitlist: '+n);
+  fd.append('_captcha','false');
+  fd.append('_template','table');
+  fetch('https://formsubmit.co/ajax/gunybuny@gmail.com',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
+    .then(function(){
+      document.getElementById(loc+'-form').style.display='none';
+      document.getElementById(loc+'-ty').style.display='block';
+    })
+    .catch(function(){
+      document.getElementById(loc+'-form').style.display='none';
+      document.getElementById(loc+'-ty').style.display='block';
+    });
 }
 function toggleFaq(el){el.parentElement.classList.toggle('open');}
 </script>
